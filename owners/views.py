@@ -54,7 +54,7 @@ def is_active(request, uid64, token):
         print(user)
         user.is_active = True
         user.save()
-        return redirect('login')
+        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/login.html')
     return redirect('register')
 
 class LoginView(APIView):
