@@ -12,13 +12,20 @@ from stocks.models import Stock
 # from peoples import models
 from peoples.models import SupplierDueReport, Supplier, Customer, CustomerDueReport
 from . import models
+from django.utils import timezone
 # Create your views here.
 
 class PurchaseView(APIView):
     serializer_class = serializers.PurchaseSerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+
+    def post(self, request, id, format=None):
+        owner = self.get_objects(id)
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -91,13 +98,31 @@ class AllPurchaseReportView(ListAPIView):
     queryset = models.Purchase.objects.all()
     serializer_class = serializers.PurchaseSerializer
     filter_backends = [ShowPurchaseReport]
+class TodayPurchaseView(APIView):
+    serializer_class = serializers.PurchaseSerializer
 
+    def get(self, request, id, format=None):
+        owner = Owner.objects.get(id=id)
+        today = timezone.now().date()
+        print(today)
+        purchase = models.Purchase.objects.filter(purchase_date=today)
+        purchase = purchase.filter(owner=owner)
+        print(purchase)
+        serializer = serializers.PurchaseSerializer(purchase, many=True)
+        return Response(serializer.data)
+    
 # Sale view
 class SaleView(APIView):
     serializer_class = serializers.SaleSerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+
+    def post(self, request, id, format=None):
+        owner = self.get_objects(id)
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -170,5 +195,18 @@ class AllSaleReportView(ListAPIView):
     queryset = models.Sale.objects.all()
     serializer_class = serializers.SaleSerializer
     filter_backends = [ShowSaleReport]
+
+
+class TodaySaleView(APIView):
+    serializer_class = serializers.SaleSerializer
+
+    def get(self, request, id, format=None):
+        owner = Owner.objects.get(id=id)
+        today = timezone.now().date()
+        sale = models.Sale.objects.filter(date=today)
+        sale = sale.filter(owner=owner)
+        serializer = serializers.SaleSerializer(sale, many=True)
+        return Response(serializer.data)
+
 
 

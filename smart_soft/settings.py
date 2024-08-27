@@ -14,16 +14,21 @@ from pathlib import Path
 import environ
 env = environ.Env()
 environ.Env.read_env()
+import dj_database_url
+...
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# Your secret key
+SECRET_KEY = env("SECRET_KEY")
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-w-sx7w)%e4vg$87z8d1o)+jhgyn-*uy(ubh7=xch8!oac_o=s6'
+# SECRET_KEY = 'django-insecure-w-sx7w)%e4vg$87z8d1o)+jhgyn-*uy(ubh7=xch8!oac_o=s6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -51,7 +56,11 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
 ]
-
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -87,12 +96,31 @@ WSGI_APPLICATION = 'smart_soft.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+...
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': env("DB_NAME"),
+#         'USER': env("DB_USER"),
+#         'PASSWORD': env("DB_PASSWORD"),
+#         'HOST': env("DB_HOST"),
+#         'PORT': env("DB_PORT"),
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://smart_soft_db_user:VOwGLWZvflqP4N9Ix6JZjV0OhzekBGFK@dpg-cr6v9srtq21c73fs1al0-a.oregon-postgres.render.com/smart_soft_db',
+    )
+} 
 
 
 # Password validation

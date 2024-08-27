@@ -29,5 +29,5 @@ class ProductSerializer(serializers.ModelSerializer):
     # unit = serializers.StringRelatedField(many=False)
     class Meta:
         model = models.Product
-        fields = ['owner', 'name', 'category', 'brand', 'unit', 'sale_price', 'purchase_cost']
+        fields = ['id','owner', 'name', 'category', 'brand', 'unit', 'sale_price', 'purchase_cost']
         read_only_fields = ['owner']

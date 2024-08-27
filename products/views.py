@@ -13,15 +13,33 @@ from rest_framework import filters
 class CategoryView(APIView):
     serializer_class = serializers.CategorySerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+
+    def post(self, request, id, format=None):
+        # owner = Owner.objects.get(user = request.user)
+        owner = self.get_objects(id)
+        print(owner)
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
             serializer.save(owner=owner)
             return Response({'details': 'category added successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
+
+class SingleCategoryView(APIView):
+    serializer_class = serializers.CategorySerializer
+
+    def get(self, request, id, format=None):
+        category = Category.objects.get(id=id)
+        # queryset = Product.objects.all()
+        # products = queryset.filter(category=category)
+        serializer = serializers.CategorySerializer(category)
+        return Response(serializer.data)
+
 class ShowCategory(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         owner_id = request.query_params.get('owner_id')
@@ -49,8 +67,14 @@ class CategoryWiseProductView(APIView):
 class ProductView(APIView):
     serializer_class = serializers.ProductSerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+
+    def post(self, request, id, format=None):
+        owner = self.get_objects(id)
         serializer = self.serializer_class(data=request.data)
         
         if serializer.is_valid():
@@ -69,7 +93,16 @@ class ProductView(APIView):
             return Response({'details': 'product added successfully'},status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class SingleProductView(APIView):
+    serializer_class = serializers.ProductSerializer
+
+    def get(self, request, id, format=None):
+        product = Product.objects.get(id=id)
+        serializer = serializers.ProductSerializer(product)
+        return Response(serializer.data)
     
+
 class ShowProduct(filters.BaseFilterBackend):#
     def filter_queryset(self, request, queryset, view):
         owner_id = request.query_params.get('owner_id')
@@ -85,14 +118,30 @@ class AllProductView(ListAPIView):
 class BrandView(APIView):
     serializer_class = serializers.BrandSerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+
+    def post(self, request, id, format=None):
+        owner = self.get_objects(id)
         serializer = self.serializer_class(data= request.data)
 
         if serializer.is_valid():
             serializer.save(owner=owner)
             return Response({'details': 'brand added successfully'},status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SingleBrandView(APIView):
+    serializer_class = serializers.BrandSerializer
+
+    def get(self, request, id, format=None):
+        brand = Brand.objects.get(id=id)
+        # queryset = Product.objects.all()
+        # products = queryset.filter(category=category)
+        serializer = serializers.BrandSerializer(brand)
+        return Response(serializer.data)
     
 class ShowBrand(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
@@ -120,11 +169,18 @@ class BrandWiseProductView(APIView):
 class UnitView(APIView):
     serializer_class = serializers.UnitSerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+
+    def post(self, request, id, format=None):
+        owner = self.get_objects(id)
         serializer = self.serializer_class(data = request.data)
 
         if serializer.is_valid():
+            # owner = Owner.objects.get(user = request.user)
             serializer.save(owner=owner)
             return Response({'details': 'unit added successfully'}, status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -140,6 +196,16 @@ class AllUnitView(ListAPIView):
     queryset = Unit.objects.all()
     serializer_class = serializers.UnitSerializer
     filter_backends = [ShowUnit]
+
+class SingleUnitView(APIView):
+    serializer_class = serializers.UnitSerializer
+
+    def get(self, request, id, format=None):
+        unit = Unit.objects.get(id=id)
+        # queryset = Product.objects.all()
+        # products = queryset.filter(category=category)
+        serializer = serializers.UnitSerializer(unit)
+        return Response(serializer.data)
 
 
 

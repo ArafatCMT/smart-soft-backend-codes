@@ -75,9 +75,12 @@ class LoginView(APIView):
             if user:
                 token, _ = Token.objects.get_or_create(user=user)
                 # print('get',token)
+                
 
                 login(request, user)
-                return Response({'token': token.key, 'user_id': user.id})
+                owner = Owner.objects.get(user=request.user)
+                print(owner.id)
+                return Response({'token': token.key, 'owner_id': owner.id})
             else:
                 return Response({'error': "Invalid Credential"})
         return Response(serializer.errors)
@@ -93,16 +96,16 @@ class UserLogoutView(APIView):
     
 
 class ProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = serializers.OwnerSerializer
 
-    def get(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get(self, request, id, format=None):
+        owner = Owner.objects.get(id=id)
         serializer = self.serializer_class(owner)
         return Response(serializer.data)
     
-    def put(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def put(self,request, id, format=None):
+        owner = Owner.objects.get(id=id)
         serializer = self.serializer_class(owner, data= request.data)
         
         if serializer.is_valid():
@@ -111,11 +114,12 @@ class ProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class UserView(APIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     serializer_class = serializers.UserSerializer
 
-    def get(self, request, format=None):
-        # user = User.objects.get(request.user)
-        serializer = self.serializer_class(request.user)
+    def get(self, request, id, format=None):
+        owner = Owner.objects.get(id=id)
+        user = User.objects.get(id=owner.user.id)
+        serializer = self.serializer_class(user)
         return Response(serializer.data)
 

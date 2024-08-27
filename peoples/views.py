@@ -14,8 +14,14 @@ from .permissions import IsAuthorOrReadOnly
 class CustomerView(APIView):
     serializer_class = serializers.CustomerSerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+        
+    def post(self, request, id, format=None):
+        owner = self.get_objects(id)
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -25,7 +31,7 @@ class CustomerView(APIView):
     
 
 class EditCustomerView(APIView):
-    permission_classes = [IsAuthorOrReadOnly]
+    # permission_classes = [IsAuthorOrReadOnly]
     serializer_class = serializers.CustomerSerializer
 
     def get_objects(self, pk):
@@ -66,8 +72,14 @@ class AllCustomerView(ListAPIView):
 class SupplierView(APIView):
     serializer_class = serializers.SupplierSerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+        
+    def post(self, request, id, format=None):
+        owner = self.get_objects(id)
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -76,7 +88,7 @@ class SupplierView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class EditSupplierView(APIView):
-    permission_classes = [IsAuthorOrReadOnly]
+    # permission_classes = [IsAuthorOrReadOnly]
     serializer_class = serializers.SupplierSerializer
 
     def get_objects(self, pk):
@@ -118,8 +130,14 @@ class AllSupplierView(ListAPIView):
 class EmployeeView(APIView):
     serializer_class = serializers.EmployeeSerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user = request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+
+    def post(self, request, id, format=None):
+        owner = self.get_objects(id)
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
@@ -128,7 +146,7 @@ class EmployeeView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class EditEmployeeView(APIView):
-    permission_classes = [IsAuthorOrReadOnly]
+    # permission_classes = [IsAuthorOrReadOnly]
     serializer_class = serializers.EmployeeSerializer
 
     def get_objects(self, pk):
@@ -170,8 +188,16 @@ class AllEmployeeView(ListAPIView):
 class SalaryView(APIView):
     serializer_class = serializers.SalarySerializer
 
-    def post(self, request, format=None):
-        owner = Owner.objects.get(user=request.user)
+    def get_objects(self, id):
+        try:
+            return Owner.objects.get(id=id)
+        except(Owner.DoesNotExist):
+            raise None
+
+    def post(self, request, id, format=None):
+        print(id)
+        owner = self.get_objects(id)
+        print(owner)
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
