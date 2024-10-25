@@ -1,101 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartSoft POS Software - Backend API Documentation</title>
-</head>
-<body>
-    <h1>SmartSoft POS Software - Backend API Documentation</h1>
-    <p>SmartSoft is a comprehensive point-of-sale software application that manages users, products, sales, purchases, stock, and other entities essential to store management.</p>
+SmartSoft POS Software - Backend API Documentation
+SmartSoft is a comprehensive point-of-sale software application that manages users, products, sales, purchases, stock, and other entities essential to store management.
 
-    <h2>Base URL</h2>
-    <p>The base URL for accessing the API is:</p>
-    <code>https://smart-soft.onrender.com/</code>
+Base URL
+The base URL for accessing the API is:
 
-    <h2>Features</h2>
+arduino
+Copy code
+https://smart-soft.onrender.com/
+Features
+1. User Management
+User Registration
+Endpoint: /owners/register/
+Allows new users to register an account.
 
-    <h3>1. User Management</h3>
-    <ul>
-        <li><strong>User Registration</strong><br>Endpoint: <code>/owners/register/</code><br>Allows new users to register an account.</li>
-        <li><strong>User Login</strong><br>Endpoint: <code>/owners/login/</code><br>Allows existing users to log in with their credentials.</li>
-    </ul>
+User Login
+Endpoint: /owners/login/
+Allows existing users to log in with their credentials.
 
-    <h3>2. Sell Product</h3>
-    <ul>
-        <li><strong>Sell Product to a Customer</strong><br>Endpoint: <code>/purchases/sale/{owner_id}/</code><br>Allows the user to sell a product to a customer.</li>
-        <li><strong>View Sell List</strong><br>Endpoint: <code>/purchases/sale/report/?owner_id={owner_id}</code><br>Provides a report of all sales for a specific owner.</li>
-    </ul>
+2. Sell Product
+Sell Product to a Customer
+Endpoint: /purchases/sale/{owner_id}/
+Allows the user to sell a product to a customer.
 
-    <h3>3. Purchase Product</h3>
-    <ul>
-        <li><strong>Purchase Product from Supplier</strong><br>Endpoint: <code>/purchases/product/{owner_id}/</code><br>Allows the user to purchase products from suppliers.</li>
-        <li><strong>View Purchase List</strong><br>Endpoint: <code>/purchases/report/?owner_id={owner_id}</code><br>Provides a report of all purchases for a specific owner.</li>
-    </ul>
+View Sell List
+Endpoint: /purchases/sale/report/?owner_id={owner_id}
+Provides a report of all sales for a specific owner.
 
-    <h3>4. Product Management</h3>
-    <ul>
-        <li><strong>Add New Product</strong><br>Endpoint: <code>/products/add/product/{owner_id}/</code><br>Allows the user to add a new product to the inventory.</li>
-        <li><strong>View Product List</strong><br>Endpoint: <code>/products/all/product/?owner_id={owner_id}</code><br>Displays a list of all products for a specific owner.</li>
-        <li><strong>View Single Product</strong><br>Endpoint: <code>/products/single/product/{product_id}/</code><br>Shows details of a specific product by product ID.</li>
-    </ul>
+3. Purchase Product
+Purchase Product from Supplier
+Endpoint: /purchases/product/{owner_id}/
+Allows the user to purchase products from suppliers.
 
-    <h3>5. Category Management</h3>
-    <ul>
-        <li><strong>Add New Category</strong><br>Endpoint: <code>/products/add/category/{owner_id}/</code><br>Allows the user to add a new product category.</li>
-        <li><strong>View Category List</strong><br>Endpoint: <code>/products/all/category/?owner_id={owner_id}</code><br>Displays a list of all categories for a specific owner.</li>
-        <li><strong>View Single Category</strong><br>Endpoint: <code>/products/category/{category_id}/</code><br>Shows details of a specific category by category ID.</li>
-    </ul>
+View Purchase List
+Endpoint: /purchases/report/?owner_id={owner_id}
+Provides a report of all purchases for a specific owner.
 
-    <h3>6. Brand Management</h3>
-    <ul>
-        <li><strong>Add New Brand</strong><br>Endpoint: <code>/products/add/brand/{owner_id}/</code><br>Allows the user to add a new brand.</li>
-        <li><strong>View Brand List</strong><br>Endpoint: <code>/products/all/brand/?owner_id={owner_id}</code><br>Displays a list of all brands for a specific owner.</li>
-        <li><strong>View Single Brand</strong><br>Endpoint: <code>/products/brand/{brand_id}/</code><br>Shows details of a specific brand by brand ID.</li>
-    </ul>
+4. Product Management
+Add New Product
+Endpoint: /products/add/product/{owner_id}/
+Allows the user to add a new product to the inventory.
 
-    <h3>7. Unit Management</h3>
-    <ul>
-        <li><strong>Add New Unit</strong><br>Endpoint: <code>/products/add/unit/{owner_id}</code><br>Allows the user to add a new unit.</li>
-        <li><strong>View Unit List</strong><br>Endpoint: <code>/products/all/unit/?owner_id={owner_id}</code><br>Displays a list of all units for a specific owner.</li>
-        <li><strong>View Single Unit</strong><br>Endpoint: <code>/products/unit/{unit_id}/</code><br>Shows details of a specific unit by unit ID.</li>
-    </ul>
+View Product List
+Endpoint: /products/all/product/?owner_id={owner_id}
+Displays a list of all products for a specific owner.
 
-    <h3>8. Stock Management</h3>
-    <ul>
-        <li><strong>View Stock Details</strong><br>Endpoint: <code>/stocks/show/?owner_id={owner_id}</code><br>Shows details of available stock with product details.</li>
-    </ul>
+View Single Product
+Endpoint: /products/single/product/{product_id}/
+Shows details of a specific product by product ID.
 
-    <h3>9. Customer Management</h3>
-    <ul>
-        <li><strong>Add New Customer</strong><br>Endpoint: <code>/peoples/add/customer/{owner_id}/</code><br>Allows the user to add a new customer.</li>
-        <li><strong>View Customer List</strong><br>Endpoint: <code>/peoples/all/customer/?owner_id={owner_id}</code><br>Displays a list of all customers for a specific owner.</li>
-        <li><strong>View Customer Due Report</strong><br>Endpoint: <code>/peoples/customer/due/report/?owner_id={owner_id}</code><br>Shows a report of due amounts from each customer.</li>
-        <li><strong>View Single Customer</strong><br>Endpoint: <code>/peoples/edit/customer/{customer_id}/</code><br>Shows details of a specific customer by customer ID.</li>
-    </ul>
+5. Category Management
+Add New Category
+Endpoint: /products/add/category/{owner_id}/
+Allows the user to add a new product category.
 
-    <h3>10. Supplier Management</h3>
-    <ul>
-        <li><strong>Add New Supplier</strong><br>Endpoint: <code>/peoples/add/supplier/{owner_id}/</code><br>Allows the user to add a new supplier.</li>
-        <li><strong>View Supplier List</strong><br>Endpoint: <code>/peoples/all/supplier/?owner_id={owner_id}</code><br>Displays a list of all suppliers for a specific owner.</li>
-        <li><strong>View Supplier Due Report</strong><br>Endpoint: <code>/peoples/supplier/due/report/?owner_id={owner_id}</code><br>Shows a report of due amounts for each supplier.</li>
-        <li><strong>View Single Supplier</strong><br>Endpoint: <code>/peoples/edit/supplier/{supplier_id}/</code><br>Shows details of a specific supplier by supplier ID.</li>
-    </ul>
+View Category List
+Endpoint: /products/all/category/?owner_id={owner_id}
+Displays a list of all categories for a specific owner.
 
-    <h3>11. Employee Management</h3>
-    <ul>
-        <li><strong>Add New Employee</strong><br>Endpoint: <code>/peoples/add/employee/{owner_id}/</code><br>Allows the user to add a new employee.</li>
-        <li><strong>View Employee List</strong><br>Endpoint: <code>/peoples/all/employee/?owner_id={owner_id}</code><br>Displays a list of all employees for a specific owner.</li>
-        <li><strong>View Single Employee</strong><br>Endpoint: <code>/peoples/edit/employee/{employee_id}/</code><br>Shows details of a specific employee by employee ID.</li>
-    </ul>
+View Single Category
+Endpoint: /products/category/{category_id}/
+Shows details of a specific category by category ID.
 
-    <h3>12. Salary Management</h3>
-    <ul>
-        <li><strong>Pay Salary to Employees</strong><br>Endpoint: <code>/peoples/salary/{owner_id}/</code><br>Allows the user to pay salaries to employees.</li>
-        <li><strong>View Salary Report</strong><br>Endpoint: <code>/peoples/salary/report/?owner_id={owner_id}</code><br>Shows a report of salary payments.</li>
-    </ul>
+6. Brand Management
+Add New Brand
+Endpoint: /products/add/brand/{owner_id}/
+Allows the user to add a new brand.
 
-    <h3>Notes</h3>
-    <p>Replace <code>{owner_id}</code>, <code>{product_id}</code>, <code>{category_id}</code>, <code>{brand_id}</code>, <code>{unit_id}</code>, <code>{customer_id}</code>, <code>{supplier_id}</code>, <code>{employee_id}</code> with the respective ID values for the owner or entity. Ensure the owner is authenticated before accessing protected endpoints.</p>
-</body>
-</html>
+View Brand List
+Endpoint: /products/all/brand/?owner_id={owner_id}
+Displays a list of all brands for a specific owner.
+
+View Single Brand
+Endpoint: /products/brand/{brand_id}/
+Shows details of a specific brand by brand ID.
+
+7. Unit Management
+Add New Unit
+Endpoint: /products/add/unit/{owner_id}
+Allows the user to add a new unit.
+
+View Unit List
+Endpoint: /products/all/unit/?owner_id={owner_id}
+Displays a list of all units for a specific owner.
+
+View Single Unit
+Endpoint: /products/unit/{unit_id}/
+Shows details of a specific unit by unit ID.
+
+8. Stock Management
+View Stock Details
+Endpoint: /stocks/show/?owner_id={owner_id}
+Shows details of available stock with product details.
+9. Customer Management
+Add New Customer
+Endpoint: /peoples/add/customer/{owner_id}/
+Allows the user to add a new customer.
+
+View Customer List
+Endpoint: /peoples/all/customer/?owner_id={owner_id}
+Displays a list of all customers for a specific owner.
+
+View Customer Due Report
+Endpoint: /peoples/customer/due/report/?owner_id={owner_id}
+Shows a report of due amounts from each customer.
+
+View Single Customer
+Endpoint: /peoples/edit/customer/{customer_id}/
+Shows details of a specific customer by customer ID.
+
+10. Supplier Management
+Add New Supplier
+Endpoint: /peoples/add/supplier/{owner_id}/
+Allows the user to add a new supplier.
+
+View Supplier List
+Endpoint: /peoples/all/supplier/?owner_id={owner_id}
+Displays a list of all suppliers for a specific owner.
+
+View Supplier Due Report
+Endpoint: /peoples/supplier/due/report/?owner_id={owner_id}
+Shows a report of due amounts for each supplier.
+
+View Single Supplier
+Endpoint: /peoples/edit/supplier/{supplier_id}/
+Shows details of a specific supplier by supplier ID.
+
+11. Employee Management
+Add New Employee
+Endpoint: /peoples/add/employee/{owner_id}/
+Allows the user to add a new employee.
+
+View Employee List
+Endpoint: /peoples/all/employee/?owner_id={owner_id}
+Displays a list of all employees for a specific owner.
+
+View Single Employee
+Endpoint: /peoples/edit/employee/{employee_id}/
+Shows details of a specific employee by employee ID.
+
+12. Salary Management
+Pay Salary to Employees
+Endpoint: /peoples/salary/{owner_id}/
+Allows the user to pay salaries to employees.
+
+View Salary Report
+Endpoint: /peoples/salary/report/?owner_id={owner_id}
+Shows a report of salary payments.
+
+Notes
+Replace {owner_id}, {product_id}, {category_id}, {brand_id}, {unit_id}, {customer_id}, {supplier_id}, {employee_id} with the respective ID values for the owner or entity.
+Make sure the owner is authenticated before accessing protected endpoints.
