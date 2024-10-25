@@ -26,3 +26,25 @@ User Login
 - View Sell List
 #####    Endpoint: /purchases/sale/report/?owner_id={owner_id}
 #####    Provides a report of all sales for a specific owner.
+
+## 3. Purchase Product
+- Purchase Product from Supplier
+#####    Endpoint: /purchases/product/{owner_id}/
+#####    Allows the user to purchase products from suppliers.
+
+- View Purchase List
+#####    Endpoint: /purchases/report/?owner_id={owner_id}
+#####    Provides a report of all purchases for a specific owner.
+
+## 4. Product Management
+- Add New Product
+#####    Endpoint: /products/add/product/{owner_id}/
+#####    Allows the user to add a new product to the inventory.
+
+- View Product List
+#####    Endpoint: /products/all/product/?owner_id={owner_id}
+#####    Displays a list of all products for a specific owner.
+
+- View Single Product
+#####    Endpoint: /products/single/product/{product_id}/
+#####    Shows details of a specific product by product ID.
