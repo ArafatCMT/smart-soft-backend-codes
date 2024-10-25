@@ -11,5 +11,5 @@ arduino Copy code https://smart-soft.onrender.com/ Features
 
 ### 1. User Management
 User Registration
-##### Endpoint: /owners/register/
-##### Allows new users to register an account.
+#####    Endpoint: /owners/register/
+#####    Allows new users to register an account.
