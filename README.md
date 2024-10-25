@@ -48,3 +48,102 @@ User Login
 - View Single Product
 #####    Endpoint: /products/single/product/{product_id}/
 #####    Shows details of a specific product by product ID.
+
+## 5. Category Management
+- Add New Category
+#####    Endpoint: /products/add/category/{owner_id}/
+Allows the user to add a new product category.
+
+- View Category List
+#####    Endpoint: /products/all/category/?owner_id={owner_id}
+#####    Displays a list of all categories for a specific owner.
+
+- View Single Category
+#####    Endpoint: /products/category/{category_id}/
+#####    Shows details of a specific category by category ID.
+
+## 6. Brand Management
+- Add New Brand
+#####    Endpoint: /products/add/brand/{owner_id}/
+#####    Allows the user to add a new brand.
+
+- View Brand List
+#####    Endpoint: /products/all/brand/?owner_id={owner_id}
+#####    Displays a list of all brands for a specific owner.
+
+- View Single Brand
+#####    Endpoint: /products/brand/{brand_id}/
+#####    Shows details of a specific brand by brand ID.
+
+## 7. Unit Management
+- Add New Unit
+#####    Endpoint: /products/add/unit/{owner_id}
+#####    Allows the user to add a new unit.
+
+- View Unit List
+#####    Endpoint: /products/all/unit/?owner_id={owner_id}
+#####    Displays a list of all units for a specific owner.
+
+- View Single Unit
+#####    Endpoint: /products/unit/{unit_id}/
+#####    Shows details of a specific unit by unit ID.
+
+## 8. Stock Management
+- View Stock Details
+#####    Endpoint: /stocks/show/?owner_id={owner_id}
+#####    Shows details of available stock with product details.
+## 9. Customer Management
+- Add New Customer
+#####    Endpoint: /peoples/add/customer/{owner_id}/
+#####    Allows the user to add a new customer.
+
+- View Customer List
+#####    Endpoint: /peoples/all/customer/?owner_id={owner_id}
+#####    Displays a list of all customers for a specific owner.
+
+- View Customer Due Report
+#####    Endpoint: /peoples/customer/due/report/?owner_id={owner_id}
+#####    Shows a report of due amounts from each customer.
+
+- View Single Customer
+#####    Endpoint: /peoples/edit/customer/{customer_id}/
+#####    Shows details of a specific customer by customer ID.
+
+## 10. Supplier Management
+- Add New Supplier
+#####    Endpoint: /peoples/add/supplier/{owner_id}/
+#####    Allows the user to add a new supplier.
+
+- View Supplier List
+#####    Endpoint: /peoples/all/supplier/?owner_id={owner_id}
+#####    Displays a list of all suppliers for a specific owner.
+
+- View Supplier Due Report
+#####    Endpoint: /peoples/supplier/due/report/?owner_id={owner_id}
+#####    Shows a report of due amounts for each supplier.
+
+-View Single Supplier
+#####    Endpoint: /peoples/edit/supplier/{supplier_id}/
+#####    Shows details of a specific supplier by supplier ID.
+
+## 11. Employee Management
+- Add New Employee
+#####    Endpoint: /peoples/add/employee/{owner_id}/
+#####    Allows the user to add a new employee.
+
+- View Employee List
+#####    Endpoint: /peoples/all/employee/?owner_id={owner_id}
+#####    Displays a list of all employees for a specific owner.
+
+- View Single Employee
+#####    Endpoint: /peoples/edit/employee/{employee_id}/
+#####    Shows details of a specific employee by employee ID.
+
+## 12. Salary Management
+- Pay Salary to Employees
+#####    Endpoint: /peoples/salary/{owner_id}/
+#####    Allows the user to pay salaries to employees.
+
+- View Salary Report
+#####    Endpoint: /peoples/salary/report/?owner_id={owner_id}
+#####    Shows a report of salary payments.
