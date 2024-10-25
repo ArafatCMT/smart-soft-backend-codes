@@ -1,6 +1,6 @@
 ## SmartSoft POS Software - Backend API Documentation
 
-SmartSoft is a comprehensive point-of-sale software application that manages users, products, sales, purchases, stock, and other entities essential to store management
+SmartSoft is a comprehensive point-of-sale software application that manages users, products, sales, purchases, stock, and other entities essential to store management.
 
 ### Base URL The base URL for accessing the API is:
 
