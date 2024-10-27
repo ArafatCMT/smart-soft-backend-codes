@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import serializers
 from . import models
 from rest_framework.views import APIView
@@ -13,7 +13,15 @@ from stocks.models import Stock
 from peoples.models import SupplierDueReport, Supplier, Customer, CustomerDueReport
 from . import models
 from django.utils import timezone
+from sslcommerz_lib import SSLCOMMERZ 
+import uuid
+import random
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
+
+def generate_transaction_id():
+   transaction_id = random.randint(100000000000, 999999999999)
+   return transaction_id
 
 class PurchaseView(APIView):
     serializer_class = serializers.PurchaseSerializer
@@ -84,7 +92,7 @@ class PurchaseView(APIView):
             stock.purchase_value += (quentity * prod.purchase_cost)
             stock.available_stock += quentity
             stock.save()
-            return Response({'details': 'parchase successfully'},status.HTTP_201_CREATED)
+            return Response({'details': 'parchase successfully', 'id': purchase.id},status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ShowPurchaseReport(filters.BaseFilterBackend):
@@ -112,6 +120,7 @@ class TodayPurchaseView(APIView):
         return Response(serializer.data)
     
 # Sale view
+
 class SaleView(APIView):
     serializer_class = serializers.SaleSerializer
 
@@ -132,6 +141,7 @@ class SaleView(APIView):
             receivable = serializer.validated_data['receivable']
             paid = serializer.validated_data['paid']
             sale = serializer.save(owner)
+           
 
             if  sale.due > 0:
                 # bokeya raktaci
@@ -181,7 +191,7 @@ class SaleView(APIView):
             stock.purchase_value -= (quentity * prod.purchase_cost)
             stock.available_stock -= quentity
             stock.save()
-            return Response({'details': 'parchase successfully'},status.HTTP_201_CREATED)
+            return Response({'details': 'sale successfully', 'id': sale.id},status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ShowSaleReport(filters.BaseFilterBackend):
@@ -209,4 +219,83 @@ class TodaySaleView(APIView):
         return Response(serializer.data)
 
 
+
+def payment(request, pk, page_nm):
+
+    # owner = models.Owner.objects.get(pk=pk)
+    # print(owner)
+    if page_nm == 2:
+        sale = models.Sale.objects.get(id=pk)
+
+        settings = { 'store_id': 'smart671d117e7a816', 'store_pass': 'smart671d117e7a816@ssl', 'issandbox': True }
+        sslcz = SSLCOMMERZ(settings)
+        post_body = {}
+        post_body['total_amount'] = sale.paid
+        post_body['currency'] = "BDT"
+        post_body['tran_id'] = generate_transaction_id()
+        post_body['success_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
+        post_body['fail_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
+        post_body['cancel_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
+        post_body['emi_option'] = 0
+        post_body['cus_name'] = f'{sale.customer.name}'
+        post_body['cus_email'] = f'{sale.customer.email}'
+        post_body['cus_phone'] = f'{sale.customer.phone}'
+        post_body['cus_add1'] = f'{sale.customer.address}'
+        post_body['cus_city'] = "Dhaka"
+        post_body['cus_country'] = "Bangladesh"
+        post_body['shipping_method'] = "NO"
+        post_body['multi_card_name'] = ""
+        post_body['num_of_item'] = 1
+        post_body['product_name'] = f'{sale.product.name}'
+        post_body['product_category'] = f'{sale.product.category}'
+        post_body['product_profile'] = "general"
+
+
+        response = sslcz.createSession(post_body) # API response
+        # print(response)
+        return redirect(response['GatewayPageURL'])
+    if page_nm == 3:
+        pur = models.Purchase.objects.get(id=pk)
+
+        settings = { 'store_id': 'smart671d117e7a816', 'store_pass': 'smart671d117e7a816@ssl', 'issandbox': True }
+        sslcz = SSLCOMMERZ(settings)
+        post_body = {}
+        post_body['total_amount'] = pur.paid
+        post_body['currency'] = "BDT"
+        post_body['tran_id'] = generate_transaction_id()
+        post_body['success_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
+        post_body['fail_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
+        post_body['cancel_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
+        post_body['emi_option'] = 0
+        post_body['cus_name'] = f'{pur.supplier.name}'
+        post_body['cus_email'] = f'{pur.supplier.email}'
+        post_body['cus_phone'] = f'{pur.supplier.phone}'
+        post_body['cus_add1'] = f'{pur.supplier.address}'
+        post_body['cus_city'] = "Dhaka"
+        post_body['cus_country'] = "Bangladesh"
+        post_body['shipping_method'] = "NO"
+        post_body['multi_card_name'] = ""
+        post_body['num_of_item'] = 1
+        post_body['product_name'] = f'{pur.product.name}'
+        post_body['product_category'] = f'{pur.product.category}'
+        post_body['product_profile'] = "general"
+
+
+        response = sslcz.createSession(post_body) # API response
+        # print(response)
+        return redirect(response['GatewayPageURL'])
+
+@csrf_exempt
+def payment_successfull(request, id, page_nm):
+    print(page_nm)
+    if page_nm == 2:
+        sale = models.Sale.objects.get(id=id)
+        sale.isPayment = True
+        sale.save()
+        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/sale.html?id=2')
+    if page_nm == 3:
+        purchase = models.Purchase.objects.get(id=id)
+        purchase.isPayment = True
+        purchase.save()
+        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/purchase.html?id=3')
 

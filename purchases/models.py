@@ -18,6 +18,7 @@ class Purchase(models.Model):
     payable = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     paid = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     due = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    isPayment = models.BooleanField(default=False, blank=True, null=True)
 
 
 class Sale(models.Model):
@@ -32,6 +33,7 @@ class Sale(models.Model):
     purchase_cost = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     profit = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
     status = models.CharField(choices=PAID_STATUS, max_length=15)
+    isPayment = models.BooleanField(default=False, blank=True, null=True)
 
     
 # today = date.today()
