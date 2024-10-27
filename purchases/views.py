@@ -233,9 +233,9 @@ def payment(request, pk, page_nm):
         post_body['total_amount'] = sale.paid
         post_body['currency'] = "BDT"
         post_body['tran_id'] = generate_transaction_id()
-        post_body['success_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
-        post_body['fail_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
-        post_body['cancel_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
+        post_body['success_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
+        post_body['fail_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
+        post_body['cancel_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
         post_body['emi_option'] = 0
         post_body['cus_name'] = f'{sale.customer.name}'
         post_body['cus_email'] = f'{sale.customer.email}'
@@ -263,9 +263,9 @@ def payment(request, pk, page_nm):
         post_body['total_amount'] = pur.paid
         post_body['currency'] = "BDT"
         post_body['tran_id'] = generate_transaction_id()
-        post_body['success_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
-        post_body['fail_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
-        post_body['cancel_url'] = f'http://127.0.0.1:8000/purchases/payment/{pk}/{page_nm}/'
+        post_body['success_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
+        post_body['fail_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
+        post_body['cancel_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
         post_body['emi_option'] = 0
         post_body['cus_name'] = f'{pur.supplier.name}'
         post_body['cus_email'] = f'{pur.supplier.email}'

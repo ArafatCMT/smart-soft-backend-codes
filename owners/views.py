@@ -32,7 +32,7 @@ class RegistrationView(APIView):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
 
-            verification_link = f"https://smart-soft.onrender.com/owners/verify/{uid}/{token}"
+            verification_link = f"https://smart-soft-gold.vercel.app/owners/verify/{uid}/{token}"
 
             email_subject = "Verify Your Account"
             email_body = render_to_string('verification_mail.html', {'verification_link': verification_link})
