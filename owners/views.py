@@ -67,10 +67,11 @@ class LoginView(APIView):
         if serializer.is_valid():
             username = serializer.validated_data['username']
             password = serializer.validated_data['password']
-            # print(username, password)
+         
 
             user = authenticate(username=username, password=password)
             # print(user)
+            # p
 
             if user:
                 token, _ = Token.objects.get_or_create(user=user)
@@ -122,4 +123,3 @@ class UserView(APIView):
         user = User.objects.get(id=owner.user.id)
         serializer = self.serializer_class(user)
         return Response(serializer.data)
-
