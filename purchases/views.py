@@ -303,9 +303,22 @@ def payment_successfull(request, id, page_nm):
 def payment_failed(request, id, page_nm):
     if page_nm == 2:
         sale = models.Sale.objects.get(id=id)
+        
+        stock = Stock.objects.get(product=sale.product)
+        stock.sold -= sale.quentity
+        stock.sale_value += (sale.quentity * sale.product.sale_price) 
+        stock.purchase_value += (sale.quentity * sale.product.purchase_cost)
+        stock.available_stock += sale.quentity
+        stock.save()
         sale.delete()
         return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/sale.html?id=2&status=failed')
     if page_nm == 3:
         purchase = models.Purchase.objects.get(id=id)
+        stock = Stock.objects.get(product=purchase.product)
+        stock.purchase -= purchase.quentity
+        stock.sale_value -= (purchase.quentity * purchase.product.sale_price) 
+        stock.purchase_value -= (purchase.quentity * purchase.product.purchase_cost)
+        stock.available_stock -= purchase.quentity
+        stock.save()
         purchase.delete()
         return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/purchase.html?id=3&status=failed')
