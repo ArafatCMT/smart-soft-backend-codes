@@ -234,7 +234,7 @@ def payment(request, pk, page_nm):
         post_body['currency'] = "BDT"
         post_body['tran_id'] = generate_transaction_id()
         post_body['success_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
-        post_body['fail_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
+        post_body['fail_url'] = f'https://smart-soft-gold.vercel.app/purchases/failed/{pk}/{page_nm}/'
         post_body['cancel_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
         post_body['emi_option'] = 0
         post_body['cus_name'] = f'{sale.customer.name}'
@@ -264,7 +264,7 @@ def payment(request, pk, page_nm):
         post_body['currency'] = "BDT"
         post_body['tran_id'] = generate_transaction_id()
         post_body['success_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
-        post_body['fail_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
+        post_body['fail_url'] = f'https://smart-soft-gold.vercel.app/purchases/failed/{pk}/{page_nm}/'
         post_body['cancel_url'] = f'https://smart-soft-gold.vercel.app/purchases/payment/{pk}/{page_nm}/'
         post_body['emi_option'] = 0
         post_body['cus_name'] = f'{pur.supplier.name}'
@@ -287,15 +287,25 @@ def payment(request, pk, page_nm):
 
 @csrf_exempt
 def payment_successfull(request, id, page_nm):
-    print(page_nm)
+    # print(page_nm)
     if page_nm == 2:
         sale = models.Sale.objects.get(id=id)
         sale.isPayment = True
         sale.save()
-        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/sale.html?id=2')
+        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/sale.html?id=2&status=success')
     if page_nm == 3:
         purchase = models.Purchase.objects.get(id=id)
         purchase.isPayment = True
         purchase.save()
-        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/purchase.html?id=3')
+        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/purchase.html?id=3&status=success')
 
+@csrf_exempt
+def payment_failed(request, id, page_nm):
+    if page_nm == 2:
+        sale = models.Sale.objects.get(id=id)
+        sale.delete()
+        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/sale.html?id=2&status=failed')
+    if page_nm == 3:
+        purchase = models.Purchase.objects.get(id=id)
+        purchase.delete()
+        return redirect('https://arafatcmt.github.io/smart_soft-frontend-codes/purchase.html?id=3&status=failed')

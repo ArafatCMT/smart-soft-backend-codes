@@ -12,5 +12,6 @@ urlpatterns = [
 
     path('pay/<int:pk>/<int:page_nm>/', views.payment),
     path('payment/<int:id>/<int:page_nm>/', views.payment_successfull),
+    path('failed/<int:id>/<int:page_nm>/', views.payment_failed),
     
 ]
